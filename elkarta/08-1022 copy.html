@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Optimering Beta 4.1</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/elkarta/css/081022.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="fixed-header">
+    <button id="menu-toggle" class="hamburger-button">☰</button>
+    <a href="../index.html"><img src="../tasks.png" alt="Tasks Logo" class="header-logo"/></a>
+    <h1></h1>
+</div>      
+
+<div id="wrapper" class="toggled">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav" id="side_bar">
+            <li class="sidebar-brand">
+                <a href="../index.html">
+                    <img src="../lkab2.png" alt="LKAB Logo" class="sidebar-logo">
+                </a>                
+            </li>
+            <hr>
+            <li class="dropdown">
+                <a href="#" data-target="#kartorSubmenu" class="submenu-toggle">Kartor</a>                
+                <ul class="submenu" id="kartorSubmenu">
+                    <li class="dropdown">
+                        <a href="#" data-target="#elSubmenu" class="submenu-toggle">EL</a>
+                        <ul class="submenu" id="elSubmenu">
+                            <li><a href="/elkarta/08-1022.html">08/1022</a></li>
+                            <li><a href="/elkarta/12-1051.html">12/1051</a></li>
+                            <!-- Andra länkar här ... -->
+                        </ul>
+                    </li>                    
+                    <li class="dropdown">
+                        <a href="#" data-target="#dieselSubmenu" class="submenu-toggle">Diesel</a>
+                        <ul class="submenu" id="dieselSubmenu">
+                            <li><a href="/dikarta/08-1022d.html">08/1022</a></li>
+                            <li><a href="/dikarta/12-1051d.html">12/1051</a></li>
+                            <!-- Andra länkar här ... -->
+                        </ul>
+                    </li>
+                </ul>
+            </li>            
+        </ul>
+    </div> 
+
+    
+    <!-- ... Din befintliga kod ... -->
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="content">
+                    <h2 id="map-title">08/1022</h2>
+                    <div id="map-container">
+                        <img src="/1313/081022.png" alt="Gruvkarta">
+                        <div class="road" id="road1"></div>
+                        <div class="road" id="road2"></div>
+                        <!-- Andra vägar här ... -->
+                    </div>
+                </div>
+            
+                <script src="../script.js"></script>
+            
+                <div id="contextMenu" class="context-menu">
+                    <ul>
+                        <li onclick="setRoadStatus('Optimerad')">Markera som Optimerad</li>
+                        <li onclick="setRoadStatus('Planerad')">Markera som Planerad</li>
+                        <li onclick="setRoadStatus('Avställd')">Markera som Avställd</li>
+                        <li onclick="setRoadStatus('Ej Optimerad')">Markera som Ej Optimerad</li>
+                    </ul>
+                </div>
+            
+                <!-- Uppdatera din HTML-tabell för att inkludera sparaknapp -->
+                <table id="commentsTable">
+                    <thead>
+                        <tr>
+                            <th class="ort-column">Ort</th>
+                            <th class="status-column">Status</th>
+                            <th class="datum-column">Datum</th>
+                            <th class="kommentar-column">Kommentar</th>
+                            <th class="sparaknapp-column">Spara</th> <!-- Lägg till en kolumn för sparaknapp -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Här är en rad i tabellen, upprepa för andra vägar om nödvändigt -->
+                        <tr data-road-id="road1" class="comment-row">
+                            <td>Väg 1</td>
+                            <td>
+                                <select id="status-road1">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select>
+                            </td>
+                            <td><input type="date" id="date-road1"></td>
+                            <td>
+                                <!-- Öka storleken på textrutan -->
+                                <textarea id="comment-road1" rows="2" cols="80"></textarea>
+                            </td>
+                            <td>
+                                <!-- Lägg till en sparaknapp här -->
+                                <button id="saveButton-road1" onclick="saveComment('road1')">Spara</button>
+                            </td>
+                        </tr>
+                
+                        <!-- Upprepa för andra vägar om nödvändigt -->
+                
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ... Din befintliga kod ... -->
+
+    
+</div>
+
+</body>
+</html>

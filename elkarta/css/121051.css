@@ -1,0 +1,20 @@
+.road {
+  position: absolute;
+  width: 1.5%;  
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+/* Positionering av vägarna */
+#road1 { top: 55%; left: 4.7%; height: 20%;}
+#road2 { top: 48.5%; left: 9%; height: 20%;}
+#road3 { top: 41%; left: 13.5%; height: 25%;}
+#road4 { top: 40%; left: 17.6%; height: 22%;}
+#road5 { top: 34%; left: 22.1%; height: 25%;}
+#road6 { top: 21%; left: 26.4%; height: 38%;}
+#road7 { top: 19.8%; left: 49.3%; height: 38%;}
+#road8 { top: 17.6%; left: 53.5%; height: 38%;}
+#road9 { top: 15%; left: 57.7%; height:38%;}
+#road10 { top: 15%; left: 61.9%; height: 35%;}
+#road11 { top: 21%; left: 66.1%; height: 30%;}
+#road12 { top: 13%; left: 70.5%; height: 35%;}

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Optimering Beta 4.1</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="fixed-header">
+    <button id="menu-toggle" class="hamburger-button">☰</button>
+    <a href="../index.html"><img src="../tasks.png" alt="Tasks Logo" class="header-logo"/></a>
+    <h1></h1>
+</div>      
+
+<div id="wrapper" class="toggled">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav" id="side_bar">
+            <li class="sidebar-brand">
+                <a href="../index.html">
+                    <img src="../lkab2.png" alt="LKAB Logo" class="sidebar-logo">
+                </a>                
+            </li>
+            <hr>
+            <li class="dropdown">
+                <a href="#" data-target="#kartorSubmenu" class="submenu-toggle">Kartor</a>                
+                <ul class="submenu" id="kartorSubmenu">
+                    <li class="dropdown">
+                        <a href="#" data-target="#elSubmenu" class="submenu-toggle">EL</a>
+                        <ul class="submenu" id="elSubmenu">
+                            <li><a href="/elkarta/08-1022.html">08/1022</a></li>
+                            <li><a href="/elkarta/12-1051.html">12/1051</a></li>
+                            <li><a href="/elkarta/15-1079.html">15/1079</a></li>
+                            <li><a href="/elkarta/22-1108.html">22/1108</a></li>
+                            <li><a href="/elkarta/26-1108.html">26/1108</a></li>
+                            <li><a href="/elkarta/30-1108.html">30/1108</a></li>
+                            <li><a href="/elkarta/34-1079.html">34/1079</a></li>
+                            <li><a href="/elkarta/34-1108.html">34/1108</a></li>
+                            <li><a href="/elkarta/38-1108.html">38/1108</a></li>
+                            <li><a href="/elkarta/41-1108soder.html">41/1108</a></li>                    
+                        </ul>
+                    </li>                    
+                    <li class="dropdown">
+                        <a href="#" data-target="#dieselSubmenu" class="submenu-toggle">Diesel</a>
+                        <ul class="submenu" id="dieselSubmenu">
+                            <li><a href="/dikarta/08-1022d.html">08/1022</a></li>
+                            <li><a href="/dikarta/12-1051d.html">12/1051</a></li>
+                            <li><a href="/dikarta/15-1079d.html">15/1079</a></li>
+                            <li><a href="/dikarta/22-1108d.html">22/1108</a></li>
+                            <li><a href="/dikarta/26-1108d.html">26/1108</a></li>
+                            <li><a href="/dikarta/30-1108d.html">30/1108</a></li>
+                            <li><a href="/dikarta/34-1079d.html">34/1079</a></li>
+                            <li><a href="/dikarta/34-1108d.html">34/1108</a></li>
+                            <li><a href="/dikarta/38-1108d.html">38/1108</a></li>
+                            <li><a href="/dikarta/41-1108soderd.html">41/1108</a></li>                    
+                        </ul>
+                    </li>
+                </ul>
+            </li>            
+        </ul>
+    </div>
+    <!-- (Sidofältets HTML här, som i exemplet ovan) -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                  <div class="content">
+                    <h2 id="map-title">34/1079</h2>
+                    <div id="map-container">
+                        <img src="/1313/341079.png" alt="Gruvkarta">
+                        <div class="road" id="road1"></div>
+                        <div class="road" id="road2"></div>
+                        <div class="road" id="road3"></div>
+                        <div class="road" id="road4"></div>
+                        <div class="road" id="road5"></div>
+                        <div class="road" id="road6"></div>
+                        <div class="road" id="road7"></div>
+                        <div class="road" id="road8"></div>
+                        <div class="road" id="road9"></div>
+                        <div class="road" id="road10"></div>
+                        <div class="road" id="road11"></div>
+                        <div class="road" id="road12"></div>
+                        <div class="road" id="road13"></div>
+                        <div class="road" id="road14"></div>
+                        <div class="road" id="road15"></div>
+                        <div class="road" id="road16"></div>
+                        <div class="road" id="road17"></div>
+                        <div class="road" id="road18"></div>
+                        <div class="road" id="road19"></div>
+                        <div class="road" id="road20"></div>
+                        <div class="road" id="road21"></div>
+                    </div>
+                </div>
+                
+                <script src="../script.js"></script>
+                
+                <div class="comments-section">
+                    <table id="commentsTable">
+                        <thead>
+                            <tr>
+                                <th class="ort-column">Ort</th>
+                                <th class="status-column">Status</th>
+                                <th class="datum-column">Datum</th>
+                                <th class="kommentar-column">Kommentar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Upprepa denna struktur för varje väg -->
+                            <tr data-road-id="road1">
+                                <td>Väg 1</td>
+                                <td><select id="status-road1">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road1"></td>
+                                <td><input type="text" id="comment-road1"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road2">
+                                <td>Väg 2</td>
+                                <td><select id="status-road2">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road2"></td>
+                                <td><input type="text" id="comment-road2"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road3">
+                                <td>Väg 3</td>
+                                <td><select id="status-road3">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road3"></td>
+                                <td><input type="text" id="comment-road3"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road4">
+                                <td>Väg 4</td>
+                                <td><select id="status-road4">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road4"></td>
+                                <td><input type="text" id="comment-road4"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road5">
+                                <td>Väg 5</td>
+                                <td><select id="status-road5">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road5"></td>
+                                <td><input type="text" id="comment-road5"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road6">
+                                <td>Väg 6</td>
+                                <td><select id="status-road6">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road6"></td>
+                                <td><input type="text" id="comment-road6"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road7">
+                                <td>Väg 7</td>
+                                <td><select id="status-road7">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road7"></td>
+                                <td><input type="text" id="comment-road7"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road8">
+                                <td>Väg 8</td>
+                                <td><select id="status-road8">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road8"></td>
+                                <td><input type="text" id="comment-road8"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road9">
+                                <td>Väg 9</td>
+                                <td><select id="status-road9">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road9"></td>
+                                <td><input type="text" id="comment-road9"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road10">
+                                <td>Väg 10</td>
+                                <td><select id="status-road10">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road10"></td>
+                                <td><input type="text" id="comment-road10"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road11">
+                                <td>Väg 11</td>
+                                <td><select id="status-road11">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road11"></td>
+                                <td><input type="text" id="comment-road11"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road12">
+                                <td>Väg 12</td>
+                                <td><select id="status-road12">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road12"></td>
+                                <td><input type="text" id="comment-road12"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road13">
+                                <td>Väg 13</td>
+                                <td><select id="status-road13">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road13"></td>
+                                <td><input type="text" id="comment-road13"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road14">
+                                <td>Väg 14</td>
+                                <td><select id="status-road14">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road14"></td>
+                                <td><input type="text" id="comment-road14"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road15">
+                                <td>Väg 15</td>
+                                <td><select id="status-road15">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road15"></td>
+                                <td><input type="text" id="comment-road15"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road16">
+                                <td>Väg 16</td>
+                                <td><select id="status-road16">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road16"></td>
+                                <td><input type="text" id="comment-road16"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road17">
+                                <td>Väg 17</td>
+                                <td><select id="status-road17">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road17"></td>
+                                <td><input type="text" id="comment-road17"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road18">
+                                <td>Väg 18</td>
+                                <td><select id="status-road18">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road18"></td>
+                                <td><input type="text" id="comment-road18"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road19">
+                                <td>Väg 19</td>
+                                <td><select id="status-road19">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road19"></td>
+                                <td><input type="text" id="comment-road19"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road20">
+                                <td>Väg 20</td>
+                                <td><select id="status-road20">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>    
+                                </select></td>
+                                <td><input type="date" id="date-road20"></td>
+                                <td><input type="text" id="comment-road20"></td>
+                                
+                            </tr>
+                            <tr data-road-id="road21">
+                                <td>Väg 21</td>
+                                <td><select id="status-road21">
+                                    <option value="" selected>Välj status</option>
+                                    <option>Optimerad</option>
+                                    <option>Planerad</option>
+                                    <option>Avställd</option>
+                                    <option>Ej Optimerad</option>
+                                </select></td>
+                                <td><input type="date" id="date-road21"></td>
+                                <td><input type="text" id="comment-road21"></td>
+                                
+                            </tr>
+                            
+                            <!-- ... -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+                <div id="contextMenu" class="context-menu" style="display: none;">
+                    <ul>
+                        <li onclick="setRoadStatus('Optimerad')">Optimerad</li>
+                        <li onclick="setRoadStatus('Planerad')">Planerad</li>
+                        <li onclick="setRoadStatus('Avställd')">Avställd</li>
+                        <li onclick="setRoadStatus('Ej Optimerad')">Ej optimerad</li>
+                    </ul>
+                </div>  
+                    <!-- Innehåll för Karta 1 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+</body>
+</html>
