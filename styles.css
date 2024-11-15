@@ -484,3 +484,10 @@ button:hover {
   align-items: center;
   justify-content: flex-start;
 }
+/* Justera stilen för signaturen i sidomenyn */
+.sidebar-nav .signature {
+    font-size: 12px; /* Minska textstorleken */
+    color: #ffffff; /* Håll texten vit */
+    text-align: center; /* Centrera texten */
+    margin-top: 10px; /* Litet mellanrum ovanför signaturen */
+}
