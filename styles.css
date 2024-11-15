@@ -282,12 +282,11 @@ body {
 }
 
 #page-content-wrapper {
-	height: 100%;
-	width: 100%;
-	position: relative;
-	padding-top: 100px; /* Justera detta värde så att det matchar din headers höjd */
-	transition: all 0.5s; /* Animeringseffekt */
-	/* Lägg till andra stilar som behövs här */
+    min-height: calc(100vh - 100px); /* Skärmens höjd minus headerns höjd */
+    width: calc(100% - 250px); /* Dra bort sidofältets bredd om sidofältet är synligt */
+    position: relative;
+    margin-top: 100px; /* Flyttar ned allt under headern */
+    transition: all 0.5s ease; /* Gör övergångarna mjuka */
 }
 
 
