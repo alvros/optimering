@@ -1,0 +1,486 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.fixed-header {
+	background-color: #000;
+	color: white;
+	padding: 10px 0;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	z-index: 1000;
+	border-bottom: 3px solid white;
+	height: 100px; /* Exempelvärde, justera efter din headers höjd */
+}
+.menu-toggle {
+	color: white;
+	font-size: 30px;
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	z-index: 1001;
+	cursor: pointer;
+}
+
+.home-link {
+  color: white;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  text-decoration: none;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin: auto;
+  width: 80%;
+  padding: 20px;
+}
+
+#map-title {
+  font-family: Arial, sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  margin: 10px 0;
+}
+
+#map-container {
+  position: relative;
+  width: 100%;
+}
+
+#map-container img {
+  width: 100%;
+  height: auto;
+}
+
+.road {
+  position: absolute;
+  width: 0.7%;
+  height: 18%;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+/* Positionering av vägarna */
+#road1 { top: 40%; left: 12.1%; }
+#road2 { top: 39%; left: 14.3%; }
+#road3 { top: 45%; left: 16.5%; }
+#road4 { top: 42%; left: 18.7%; }
+#road5 { top: 45%; left: 20.9%; }
+#road6 { top: 40%; left: 23.1%; }
+#road7 { top: 42%; left: 25.3%; }
+#road8 { top: 39%; left: 27.5%; }
+#road9 { top: 42%; left: 29.7%; }
+#road10 { top: 30%; left: 31.9%; }
+#road11 { top: 30%; left: 34.1%; }
+#road12 { top: 42%; left: 36.3%; }
+#road13 { top: 42%; left: 38.5%; }
+#road14 { top: 42%; left: 40.7%; }
+#road15 { top: 42%; left: 42.9%; }
+#road16 { top: 42%; left: 45.1%; }
+#road17 { top: 42%; left: 47.3%; }
+#road18 { top: 42%; left: 49.5%; }
+#road19 { top: 42%; left: 51.7%; }
+#road20 { top: 42%; left: 53.9%; }
+#road21 { top: 42%; left: 56.1%; }
+
+/* Stilar för contextmenyn */
+.context-menu {
+  position: absolute;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+}
+
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu ul li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.context-menu ul li:hover {
+  background-color: #f5f5f5;
+}
+
+.map-thumbnails {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr); /* 4 kolumner */
+	grid-gap: 20px; /* Mellanrum mellan rutnätselementen */
+	justify-content: center;
+}	
+
+.map-item {
+	width: 100%; /* Använd hela bredden inom dess rutnätscell */
+}
+
+.map-item p {
+  margin: 10px 0;
+}
+
+.thumbnail {
+  width: 200px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Stilar för hem-länken i headern */
+.home-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.home-link:hover {
+  background-color: #005fa3;
+  text-decoration: none;
+}
+.comment-block {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.comment-block label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.comment-block textarea {
+  width: 100%;
+  height: 250px; /* Du kan ändra höjden till önskat värde, till exempel 250px */
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+
+.comment-block input[type="date"] {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#commentsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#commentsTable, #commentsTable th, #commentsTable td {
+  border: 1px solid #ddd;
+}
+
+#commentsTable th, #commentsTable td {
+  padding: 8px;
+  text-align: left;
+}
+
+#commentsTable th {
+  background-color: #f4f4f4;
+}
+
+.ort-column {
+  width: 10%; /* Exempel: 20% av tabellens bredd */
+}
+
+.status-column {
+  width: 10%; /* Exempel: 20% av tabellens bredd */
+}
+
+.datum-column {
+  width: 15%; /* Exempel: 30% av tabellens bredd */
+}
+
+.kommentar-column {
+  width: 65%; /* Exempel: 30% av tabellens bredd */
+}
+html,
+body {
+	height: 100%;
+}
+#map_canvas,
+#wrapper,
+
+.container-fluid,
+.row,
+.col-lg-12 {
+	height: 100%;
+	width: 100%;
+}
+
+/* Toggle Styles */
+.nav-tabs > li {
+	float: none;
+}
+.nav-tabs {
+	border-bottom: 0;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+	margin: 0;
+	border-radius: 0;
+}
+#wrapper {
+	padding-left: 250px; /* Standardvärde för att visa sidebar */
+}
+
+#wrapper.toggled {
+	padding-left: 0px;
+}
+
+#sidebar-wrapper {
+	z-index: 2000; /* Högt z-index för att säkerställa synlighet */
+	position: fixed; /* Fixerad position */
+	left: 0; /* Vänsterkanten av sidan */
+	width: 250px; /* Bredd på sidofältet */
+	height: 100%; /* Full höjd */
+	margin-left: 0px; /* Visa sidofältet initialt */
+	overflow-y: auto; /* Tillåt skrollning om innehållet är långt */
+	background: #000; /* Bakgrundsfärg */
+	transition: margin-left 0.5s; /* Animeringseffekt */
+	top: 125px; /* Matcha headerns höjd */
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	margin-left: 0; /* Visa sidofältet när toggled */
+}
+
+#page-content-wrapper {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	padding-top: 100px; /* Justera detta värde så att det matchar din headers höjd */
+	transition: all 0.5s; /* Animeringseffekt */
+	/* Lägg till andra stilar som behövs här */
+}
+
+
+#wrapper.toggled #page-content-wrapper {
+	position: absolute;
+	margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: 250px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar-nav li {
+	color: #999999;
+	text-indent: 20px;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+.sidebar-nav li a {
+	display: block;
+	text-decoration: none;
+	color: #999999;
+}
+
+.sidebar-nav li a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+	text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+	height: 65px;
+	font-size: 18px;
+	line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+	color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+	color: #fff;
+	background: none;
+}
+.sidebar-nav .collapse {
+	display: none;
+}
+
+.sidebar-nav .collapse.show {
+	display: block;
+}
+
+.sidebar-nav .dropdown > a:after {
+	content: '\25BC';
+	float: right;
+}
+
+.sidebar-nav .dropdown > a[aria-expanded="true"]:after {
+	content: '\25B2';
+}
+.sidebar-nav .submenu {
+	display: none;
+	list-style-type: none;
+	padding-left: 20px;
+}
+
+.sidebar-nav .submenu.show {
+	display: block;
+}
+
+.sidebar-nav .submenu-toggle:after {
+	content: '\25B6';
+	float: right;
+}
+
+.sidebar-nav .submenu-toggle[aria-expanded="true"]:after {
+	content: '\25BC';
+}
+
+/* Stylar för grundläggande sidomeny */
+.sidebar-nav li {
+	color: #999999;
+	text-indent: 20px;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+.sidebar-nav li a {
+	display: block;
+	text-decoration: none;
+	color: #999999;
+}
+
+.sidebar-nav li a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+/* ...Övriga stilar... */
+
+
+
+@media (min-width: 768px) {
+	#wrapper {
+		padding-left: 250px;
+	}
+
+	#wrapper.toggled {
+		padding-left: 0;
+	}
+
+	#sidebar-wrapper {
+		width: 250px;
+	}
+
+	#wrapper.toggled #sidebar-wrapper {
+		width: 0;
+	}
+
+	#page-content-wrapper {
+		position: relative;
+		margin-right: 0;
+}
+
+	#wrapper.toggled #page-content-wrapper {
+		position: relative;
+		margin-right: 0;
+	}
+}
+
+
+#sidebar-wrapper {
+  background: #000; /* Svart bakgrund */
+  color: white;
+  border-right: 3px solid white; /* Vit högerkant */
+  /* Övriga stilar behålls */
+}
+
+
+/* Övriga stilar behålls som de är */
+.hamburger-button {
+	position: fixed; /* Fast position oberoende av sidans scrollning */
+	top: 10px; /* Avstånd från toppen */
+	left: 30px; /* Avstånd från högerkanten */
+	background-color: transparent; /* Genomskinlig bakgrund */
+	color: white; /* Färg på ikonen */
+	border: none; /* Ingen kant */
+	cursor: pointer; /* Visa en pekare för att indikera klickbarhet */
+	padding: 10px;
+	font-size: 40px; /* Storlek på ikonen */
+	z-index: 3000; /* Säkerställer att den är över andra element */
+}
+.header-logo {
+	height: 80px; /* Example height, adjust as needed */
+	width: auto; /* Keeps the aspect ratio of the image */
+	top: 40px;
+	/* Additional styling if needed */
+}
+.sidebar-logo {
+	max-height: 70px; /* Eller annan önskad storlek */
+	width: auto; /* Behåll bildens proportioner */
+	display: block; /* Centrera bilden i sidofältet */
+	margin: 0 auto; /* Lägg till auto-marginaler för centrering */
+}
+/* Styla knappen */
+button {
+	padding: 5px 10px;
+	background-color: #007bff; /* Blå färg */
+	color: #fff; /* Vit textfärg */
+	border: none;
+	cursor: pointer;
+}
+
+/* Styla knappen när musen hovrar över den */
+button:hover {
+	background-color: #0056b3; /* Mörkare blå vid hover */
+}
+.comment-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
