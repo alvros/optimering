@@ -484,33 +484,3 @@ button:hover {
   align-items: center;
   justify-content: flex-start;
 }
-/* Stil för sidomenyn för att säkerställa att footern är längst ner */
-#sidebar-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-/* Sidomenyns innehåll, som ska vara ovanför signaturen */
-.sidebar-nav {
-    flex: 1; /* Tar upp all ledig plats i sidomenyn */
-    overflow-y: auto; /* Om innehållet är för stort blir det scrollbart */
-}
-
-/* Stil för signatur och e-post längst ner */
-.sidebar-footer {
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #ffffff; /* Vit text */
-    border-top: 1px solid #444; /* Avskiljare ovanför footern för synlighet */
-}
-
-.email a {
-    color: #82CFFD; /* Anpassa färgen för e-postlänken till att passa din design */
-    text-decoration: none;
-}
-
-.email a:hover {
-    text-decoration: underline;
-}
