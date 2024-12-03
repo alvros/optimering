@@ -169,10 +169,13 @@
             let date = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
 
+            // Omvandla datumet till ISO-format om det inte redan är det
+            let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
+
             data.push({
                 Gruvort: roadId,
                 Status: status,
-                Datum: date,
+                Datum: formattedDate,
                 Kommentar: comment
             });
         });
