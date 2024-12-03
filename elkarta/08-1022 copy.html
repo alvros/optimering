@@ -1,130 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Optimering Beta 4.1</title>
+    <title>Optimering Beta 5.01</title>
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="/elkarta/css/081022.css">
+    <link rel="stylesheet" href="css/081022.css">
+    <style>
+        /* Större och tydligare kommentarsfält */
+        .kommentar-column textarea {
+            width: 100%;
+            height: 60px;
+            box-sizing: border-box;
+        }
+
+        /* Scroll för lång kommentarssektion */
+        .comments-section {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        /* Knapputseende */
+        .save-button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-
-<!-- Header -->
-<div class="fixed-header">
-    <button id="menu-toggle" class="hamburger-button">☰</button>
-    <a href="../index.html"><img src="../tasks.png" alt="Tasks Logo" class="header-logo"/></a>
-    <h1></h1>
-</div>      
-
-<div id="wrapper" class="toggled">
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav" id="side_bar">
-            <li class="sidebar-brand">
-                <a href="../index.html">
-                    <img src="../lkab2.png" alt="LKAB Logo" class="sidebar-logo">
-                </a>                
-            </li>
-            <hr>
-            <li class="dropdown">
-                <a href="#" data-target="#kartorSubmenu" class="submenu-toggle">Kartor</a>                
-                <ul class="submenu" id="kartorSubmenu">
-                    <li class="dropdown">
-                        <a href="#" data-target="#elSubmenu" class="submenu-toggle">EL</a>
-                        <ul class="submenu" id="elSubmenu">
-                            <li><a href="/elkarta/08-1022.html">08/1022</a></li>
-                            <li><a href="/elkarta/12-1051.html">12/1051</a></li>
-                            <!-- Andra länkar här ... -->
-                        </ul>
-                    </li>                    
-                    <li class="dropdown">
-                        <a href="#" data-target="#dieselSubmenu" class="submenu-toggle">Diesel</a>
-                        <ul class="submenu" id="dieselSubmenu">
-                            <li><a href="/dikarta/08-1022d.html">08/1022</a></li>
-                            <li><a href="/dikarta/12-1051d.html">12/1051</a></li>
-                            <!-- Andra länkar här ... -->
-                        </ul>
-                    </li>
-                </ul>
-            </li>            
-        </ul>
-    </div> 
-
-    
-    <!-- ... Din befintliga kod ... -->
-
-<div id="page-content-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="content">
-                    <h2 id="map-title">08/1022</h2>
-                    <div id="map-container">
-                        <img src="/1313/081022.png" alt="Gruvkarta">
-                        <div class="road" id="road1"></div>
-                        <div class="road" id="road2"></div>
-                        <!-- Andra vägar här ... -->
-                    </div>
-                </div>
-            
-                <script src="../script.js"></script>
-            
-                <div id="contextMenu" class="context-menu">
-                    <ul>
-                        <li onclick="setRoadStatus('Optimerad')">Markera som Optimerad</li>
-                        <li onclick="setRoadStatus('Planerad')">Markera som Planerad</li>
-                        <li onclick="setRoadStatus('Avställd')">Markera som Avställd</li>
-                        <li onclick="setRoadStatus('Ej Optimerad')">Markera som Ej Optimerad</li>
-                    </ul>
-                </div>
-            
-                <!-- Uppdatera din HTML-tabell för att inkludera sparaknapp -->
-                <table id="commentsTable">
-                    <thead>
-                        <tr>
-                            <th class="ort-column">Ort</th>
-                            <th class="status-column">Status</th>
-                            <th class="datum-column">Datum</th>
-                            <th class="kommentar-column">Kommentar</th>
-                            <th class="sparaknapp-column">Spara</th> <!-- Lägg till en kolumn för sparaknapp -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Här är en rad i tabellen, upprepa för andra vägar om nödvändigt -->
-                        <tr data-road-id="road1" class="comment-row">
-                            <td>Väg 1</td>
-                            <td>
-                                <select id="status-road1">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select>
-                            </td>
-                            <td><input type="date" id="date-road1"></td>
-                            <td>
-                                <!-- Öka storleken på textrutan -->
-                                <textarea id="comment-road1" rows="2" cols="80"></textarea>
-                            </td>
-                            <td>
-                                <!-- Lägg till en sparaknapp här -->
-                                <button id="saveButton-road1" onclick="saveComment('road1')">Spara</button>
-                            </td>
-                        </tr>
-                
-                        <!-- Upprepa för andra vägar om nödvändigt -->
-                
-                    </tbody>
-                </table>
-                
-            </div>
-        </div>
+    <div class="comments-section">
+        <table id="commentsTable">
+            <thead>
+                <tr>
+                    <th class="ort-column">Ort</th>
+                    <th class="status-column">Status</th>
+                    <th class="datum-column">Datum</th>
+                    <th class="kommentar-column">Kommentar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-road-id="road1">
+                    <td>Väg 1</td>
+                    <td>
+                        <select id="status-road1">
+                            <option value="" selected>Välj status</option>
+                            <option>Optimerad</option>
+                            <option>Planerad</option>
+                            <option>Avställd</option>
+                            <option>Ej Optimerad</option>
+                        </select>
+                    </td>
+                    <td><input type="date" id="date-road1"></td>
+                    <td><textarea id="comment-road1"></textarea></td>
+                </tr>
+                <tr data-road-id="road2">
+                    <td>Väg 2</td>
+                    <td>
+                        <select id="status-road2">
+                            <option value="" selected>Välj status</option>
+                            <option>Optimerad</option>
+                            <option>Planerad</option>
+                            <option>Avställd</option>
+                            <option>Ej Optimerad</option>
+                        </select>
+                    </td>
+                    <td><input type="date" id="date-road2"></td>
+                    <td><textarea id="comment-road2"></textarea></td>
+                </tr>
+                <!-- Fler vägar kan läggas till här -->
+            </tbody>
+        </table>
+        <button class="save-button" onclick="downloadCSV()">Ladda Ner CSV</button>
     </div>
-</div>
 
-<!-- ... Din befintliga kod ... -->
+    <script>
+        function downloadCSV() {
+            // Hämta alla rader i tabellen
+            const rows = document.querySelectorAll('#commentsTable tbody tr');
+            
+            // Konvertera data till CSV-format
+            const csvData = Array.from(rows).map(row => {
+                const roadId = row.getAttribute('data-road-id');
+                const status = row.querySelector(`#status-${roadId}`).value || '';
+                const date = row.querySelector(`#date-${roadId}`).value || '';
+                const comment = row.querySelector(`#comment-${roadId}`).value || '';
 
-    
-</div>
+                return `${roadId},${status},${date},${comment}`;
+            });
 
+            // Lägga till kolumnrubriker
+            const csvContent = 'Väg,Status,Datum,Kommentar\n' + csvData.join('\n');
+
+            // Skapa och ladda ner CSV-filen
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'data.csv';
+            link.click();
+        }
+    </script>
 </body>
 </html>
