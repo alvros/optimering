@@ -154,75 +154,99 @@
 </div>
 
 <script>
-    document.getElementById("saveButtonUnderMap").addEventListener("click", saveData);
-    document.getElementById("saveButtonAboveTable").addEventListener("click", saveData);
-    document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
+  document.addEventListener("DOMContentLoaded", loadData);
 
-    function saveData() {
-        // Hämta all data från sidan som har ändrats av användaren
-        const roads = document.querySelectorAll(".comments-section tbody tr");
-        let data = [];
+  function loadData() {
+      fetch("https://din-power-automate-endpoint-url-för-get-data", {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Fyll i fälten med data från SharePoint
+          data.forEach(item => {
+              const roadId = item.Gruvort;
+              document.querySelector(`#status-${roadId}`).value = item.Status;
+              document.querySelector(`#date-${roadId}`).value = item.Datum;
+              document.querySelector(`#comment-${roadId}`).value = item.Kommentar;
+          });
+      })
+      .catch(error => {
+          console.error("Fel vid inläsning av data:", error);
+          alert("Ett fel uppstod vid inläsning av data. Kontrollera nätverksanslutningen.");
+      });
+  }
 
-        roads.forEach(road => {
-            let roadId = road.getAttribute("data-road-id");
-            let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector(`#date-${roadId}`).value;
-            let comment = road.querySelector(`#comment-${roadId}`).value;
+  document.getElementById("saveButtonUnderMap").addEventListener("click", saveData);
+  document.getElementById("saveButtonAboveTable").addEventListener("click", saveData);
+  document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
 
-            // Omvandla datumet till ISO-format om det inte redan är det
-            let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
+  function saveData() {
+      // Hämta all data från sidan som har ändrats av användaren
+      const roads = document.querySelectorAll(".comments-section tbody tr");
+      let data = [];
 
-            data.push({
-                Gruvort: roadId,
-                Status: status,
-                Datum: formattedDate,
-                Kommentar: comment
-            });
-        });
+      roads.forEach(road => {
+          let roadId = road.getAttribute("data-road-id");
+          let status = road.querySelector(`#status-${roadId}`).value;
+          let date = road.querySelector(`#date-${roadId}`).value;
+          let comment = road.querySelector(`#comment-${roadId}`).value;
 
-        // Skicka data till Power Automate-flödet via HTTP POST
-        fetch("https://prod-19.westeurope.logic.azure.com:443/workflows/39c38b174dc54475bb0d15fb59aaafbc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5vfT9HLLyjrHRSYTyNEyHjpnp5drSky2_NPjI_ZD1g", { // Byt ut med din Power Automate URL
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ roads: data })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Ändringarna har sparats!");
-            } else {
-                alert("Kunde inte spara ändringarna. Försök igen senare.");
-            }
-        })
-        .catch(error => {
-            console.error("Fel vid sparande:", error);
-            alert("Ett fel uppstod vid sparande. Kontrollera nätverksanslutningen.");
-        });
-    }
+          // Omvandla datumet till ISO-format om det inte redan är det
+          let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
 
-    function exportToCsv() {
-        const roads = document.querySelectorAll(".comments-section tbody tr");
-        let csvContent = "Gruvort,Status,Datum,Kommentar\n";
+          data.push({
+              Gruvort: roadId,
+              Status: status,
+              Datum: formattedDate,
+              Kommentar: comment
+          });
+      });
 
-        roads.forEach(road => {
-            let roadId = road.getAttribute("data-road-id");
-            let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector
-            (`#date-${roadId}`).value;
-            let comment = road.querySelector(`#comment-${roadId}`).value;
+      // Skicka data till Power Automate-flödet via HTTP POST
+      fetch("https://prod-19.westeurope.logic.azure.com:443/workflows/39c38b174dc54475bb0d15fb59aaafbc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5vfT9HLLyjrHRSYTyNEyHjpnp5drSky2_NPjI_ZD1g", { // Byt ut med din Power Automate URL
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ roads: data })
+      })
+      .then(response => {
+          if (response.ok) {
+              alert("Ändringarna har sparats!");
+          } else {
+              alert("Kunde inte spara ändringarna. Försök igen senare.");
+          }
+      })
+      .catch(error => {
+          console.error("Fel vid sparande:", error);
+          alert("Ett fel uppstod vid sparande. Kontrollera nätverksanslutningen.");
+      });
+  }
 
-            csvContent += `${roadId},${status},${date},${comment}\n`;
-        });
+  function exportToCsv() {
+      const roads = document.querySelectorAll(".comments-section tbody tr");
+      let csvContent = "Gruvort,Status,Datum,Kommentar\n";
 
-        // Skapa en nedladdningslänk för CSV-filen
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.setAttribute("href", url);
-        a.setAttribute("download", "gruvdata.csv");
-        a.click();
-    }
+      roads.forEach(road => {
+          let roadId = road.getAttribute("data-road-id");
+          let status = road.querySelector(`#status-${roadId}`).value;
+          let date = road.querySelector(`#date-${roadId}`).value;
+          let comment = road.querySelector(`#comment-${roadId}`).value;
+
+          csvContent += `${roadId},${status},${date},${comment}\n`;
+      });
+
+      // Skapa en nedladdningslänk för CSV-filen
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.setAttribute("href", url);
+      a.setAttribute("download", "gruvdata.csv");
+      a.click();
+  }
 </script>
 
 </body>
