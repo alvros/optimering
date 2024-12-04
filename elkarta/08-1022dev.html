@@ -183,31 +183,28 @@
 
     function loadData() {
         fetch("https://prod-116.westeurope.logic.azure.com:443/workflows/7efbd93f53e644bc9acc8f328b127034/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=3sl9Rl-3udA7v15DmbYIPcfZNSOGSf1escNF0_UbLug", {
-        method: "GET",
+            method: "GET",
             headers: {
-                "Content-Type": "application/json"
+                "Accept": "application/json; odata=verbose"
             }
         })
         .then(response => response.json())
         .then(data => {
-            // Skapa en tom objekt för att hålla senaste data för varje gruvort
+            let items = data.d.results;
             let latestData = {};
-
-            // Sortera data baserat på datum så att senaste posterna kommer först
-            data.sort((a, b) => new Date(b.Datum) - new Date(a.Datum));
-
-            // Gå igenom datan och ta den senaste posten för varje gruvort
-            data.forEach(item => {
+    
+            items.sort((a, b) => new Date(b.Datum) - new Date(a.Datum));
+    
+            items.forEach(item => {
                 if (!latestData[item.Gruvort]) {
                     latestData[item.Gruvort] = item;
                 }
             });
-
-            // Fyll i fälten med data från SharePoint
+    
             for (const roadId in latestData) {
                 const item = latestData[roadId];
                 document.querySelector(`#status-${roadId}`).value = item.Status;
-                document.querySelector(`#date-${roadId}`).value = item.Datum;
+                document.querySelector(`#date-${roadId}`).value = item.Datum ? item.Datum.split('T')[0] : '';
                 document.querySelector(`#comment-${roadId}`).value = item.Kommentar;
             }
         })
@@ -216,105 +213,71 @@
             alert("Ett fel uppstod vid inläsning av data. Kontrollera nätverksanslutningen.");
         });
     }
-
-    document.querySelectorAll("input, select").forEach(element => {
-        element.addEventListener("change", event => {
-            let roadId = event.target.closest("tr").getAttribute("data-road-id");
-            saveData(roadId); // Anropa saveData() med det specifika roadId som ändrats
-        });
-    });
-
+    
+    // Ta bort event listener på individuella fält om du inte vill spara vid varje ändring
+    // document.querySelectorAll("input, select").forEach(element => {
+    //     element.addEventListener("change", event => {
+    //         let roadId = event.target.closest("tr").getAttribute("data-road-id");
+    //         saveData(roadId); // Anropa saveData() med det specifika roadId som ändrats
+    //     });
+    // });
+    
     function saveData(roadId) {
-    // Hämta all data för den specifika raden som har ändrats
-    let status = document.querySelector(`#status-${roadId}`).value;
-    let date = document.querySelector(`#date-${roadId}`).value;
-    let comment = document.querySelector(`#comment-${roadId}`).value;
-
-    // Omvandla datumet till ISO-format om det inte redan är det
-    let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
-
-    // Bygg upp datan som ska skickas
-    let data = {
-        Gruvort: roadId,
-        Status: status,
-        Datum: formattedDate,
-        Kommentar: comment
-    };
-
-    // Skicka data till Power Automate-flödet via HTTP POST
-    fetch("https://prod-193.westeurope.logic.azure.com:443/workflows/e5d2364a7ba24bd39349a4c354aac388/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rcDAKsEPQPI8xrCxDXmr9LXpQWO-lMalWK4xnFNem9s", { // Byt ut med din Power Automate URL
+        let status = document.querySelector(`#status-${roadId}`).value;
+        let date = document.querySelector(`#date-${roadId}`).value;
+        let comment = document.querySelector(`#comment-${roadId}`).value;
+    
+        let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
+    
+        let data = [{
+            Gruvort: roadId,
+            Status: status,
+            Datum: formattedDate,
+            Kommentar: comment
+        }];
+    
+        fetch("https://prod-193.westeurope.logic.azure.com:443/workflows/e5d2364a7ba24bd39349a4c354aac388/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rcDAKsEPQPI8xrCxDXmr9LXpQWO-lMalWK4xnFNem9s", {
             method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data) // Skicka bara den senaste uppdateringen
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Ändringarna har sparats!");
-        } else {
-            console.error("Kunde inte spara ändringarna. Försök igen senare.");
-        }
-    })
-    .catch(error => {
-        console.error("Fel vid sparande:", error);
-    });
-}
-
-
-    function exportToCsv() {
-        const roads = document.querySelectorAll(".comments-section tbody tr");
-        let csvContent = "Gruvort,Status,Datum,Kommentar\n";
-
-        roads.forEach(road => {
-            let roadId = road.getAttribute("data-road-id");
-            let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector(`#date-${roadId}`).value;
-            let comment = road.querySelector(`#comment-${roadId}`).value;
-
-            csvContent += `${roadId},${status},${date},${comment}\n`;
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Ändringarna har sparats!");
+            } else {
+                console.error("Kunde inte spara ändringarna. Försök igen senare.");
+            }
+        })
+        .catch(error => {
+            console.error("Fel vid sparande:", error);
         });
-
-        // Skapa en nedladdningslänk för CSV-filen
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.setAttribute("href", url);
-        a.setAttribute("download", "gruvdata.csv");
-        a.click();
     }
-
-    // Event Listener för "Spara Ändringar"-knappen
-    document.getElementById("saveButtonUnderMap").addEventListener("click", saveAllData);
-    document.getElementById("saveButtonAboveTable").addEventListener("click", saveAllData);
-
+    
     function saveAllData() {
-        // Samla in data från alla rader i tabellen
         const dataToSend = [];
         const rows = document.querySelectorAll("#commentsTable tbody tr");
-
+    
         rows.forEach(row => {
             const roadId = row.getAttribute("data-road-id");
             const status = row.querySelector(`#status-${roadId}`).value;
             const date = row.querySelector(`#date-${roadId}`).value;
             const comment = row.querySelector(`#comment-${roadId}`).value;
-
-            // Formatera datum till ISO-format
+    
             const formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
-
-            // Skapa ett objekt för varje rad
+    
             const rowData = {
                 Gruvort: roadId,
                 Status: status,
                 Datum: formattedDate,
                 Kommentar: comment
             };
-
+    
             dataToSend.push(rowData);
         });
-
-        // Skicka data till Power Automate-flödet
-        fetch("https://prod-193.westeurope.logic.azure.com:443/workflows/e5d2364a7ba24bd39349a4c354aac388/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rcDAKsEPQPI8xrCxDXmr9LXpQWO-lMalWK4xnFNem9s", { // Byt ut med din Power Automate URL
+    
+        fetch("https://prod-193.westeurope.logic.azure.com:443/workflows/e5d2364a7ba24bd39349a4c354aac388/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rcDAKsEPQPI8xrCxDXmr9LXpQWO-lMalWK4xnFNem9s", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -334,8 +297,13 @@
             alert("Ett fel uppstod vid sparande av ändringarna. Kontrollera nätverksanslutningen.");
         });
     }
-
-   
+    
+    // Event Listener för "Spara Ändringar"-knappen
+    document.getElementById("saveButtonUnderMap").addEventListener("click", saveAllData);
+    document.getElementById("saveButtonAboveTable").addEventListener("click", saveAllData);
+    
+    
+       
 </script>
 
 </body>
