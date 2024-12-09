@@ -184,62 +184,62 @@
     document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
 
     function saveData() {
-    // Hämta alla rader från tabellen
-    const roads = document.querySelectorAll(".comments-section tbody tr");
-
-    // Kontrollera om det finns några rader
-    if (roads.length === 0) {
-        alert("Inga data att spara!");
-        return;
-    }
-
-    // Loopa igenom varje rad och skicka data för varje rad individuellt
-    roads.forEach(road => {
-        let roadId = road.getAttribute("data-road-id");
-        let status = road.querySelector(`#status-${roadId}`).value;
-        let date = road.querySelector(`#date-${roadId}`).value;
-        let comment = road.querySelector(`#comment-${roadId}`).value;
-
-        // Kontrollera att nödvändiga fält är ifyllda
-        if (!status || !date || !comment) {
-            console.warn(`Raden ${roadId} saknar nödvändiga värden. Hoppar över.`);
+        // Hämta alla rader från tabellen
+        const roads = document.querySelectorAll(".comments-section tbody tr");
+    
+        // Kontrollera om det finns några rader
+        if (roads.length === 0) {
+            alert("Inga data att spara!");
             return;
         }
-
-        // Omvandla datumet till ISO-format om det inte redan är det
-        let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
-
-        // Skapa datan som ska skickas
-        let data = {
-            Gruvort: roadId,
-            Status: status,
-            Datum: formattedDate,
-            Kommentar: comment
-        };
-
-        // Skicka datan för varje rad till Power Automate
-        fetch("https://prod-19.westeurope.logic.azure.com:443/workflows/39c38b174dc54475bb0d15fb59aaafbc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5vfT9HLLyjrHRSYTyNEyHjpnp5drSky2_NPjI_ZD1g", { // Byt ut med din Power Automate URL
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log(`Ändringarna för ${roadId} har sparats!`);
-            } else {
-                console.error(`Kunde inte spara ändringarna för ${roadId}.`);
-                alert(`Ett fel uppstod när data för ${roadId} skulle sparas.`);
+    
+        // Loopa igenom varje rad och skicka data för varje rad individuellt
+        roads.forEach(road => {
+            let roadId = road.getAttribute("data-road-id");
+            let status = road.querySelector(`#status-${roadId}`).value;
+            let date = road.querySelector(`#date-${roadId}`).value;
+            let comment = road.querySelector(`#comment-${roadId}`).value;
+    
+            // Kontrollera att nödvändiga fält är ifyllda
+            if (!status || !date || !comment) {
+                console.warn(`Raden ${roadId} saknar nödvändiga värden. Hoppar över.`);
+                return;
             }
-        })
-        .catch(error => {
-            console.error(`Fel vid sparande för ${roadId}:`, error);
+    
+            // Omvandla datumet till ISO-format om det inte redan är det
+            let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
+    
+            // Skapa datan som ska skickas
+            let data = {
+                Gruvort: roadId,
+                Status: status,
+                Datum: formattedDate,
+                Kommentar: comment
+            };
+    
+            // Skicka datan för varje rad till Power Automate
+            fetch("https://prod-19.westeurope.logic.azure.com:443/workflows/39c38b174dc54475bb0d15fb59aaafbc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5vfT9HLLyjrHRSYTyNEyHjpnp5drSky2_NPjI_ZD1g", { // Byt ut med din Power Automate URL
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Ändringarna för ${roadId} har sparats!`);
+                } else {
+                    console.error(`Kunde inte spara ändringarna för ${roadId}.`);
+                    alert(`Ett fel uppstod när data för ${roadId} skulle sparas.`);
+                }
+            })
+            .catch(error => {
+                console.error(`Fel vid sparande för ${roadId}:`, error);
+            });
         });
-    });
-
-    alert("Alla ändringar har skickats för sparande.");
-}
+    
+        alert("Alla ändringar har skickats för sparande.");
+    }
 
 
 
