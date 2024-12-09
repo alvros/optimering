@@ -207,7 +207,7 @@
 
     // Skicka data till Power Automate-flödet via HTTP POST
     fetch("https://prod-19.westeurope.logic.azure.com:443/workflows/39c38b174dc54475bb0d15fb59aaafbc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5vfT9HLLyjrHRSYTyNEyHjpnp5drSky2_NPjI_ZD1g", { // Byt ut med din Power Automate URL
-        method: "POST",
+            method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
@@ -215,9 +215,16 @@
     })
     .then(response => {
         if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error("Kunde inte spara ändringarna.");
+        }
+    })
+    .then(result => {
+        if (result.success) {
             alert("Ändringarna har sparats!");
         } else {
-            alert("Kunde inte spara ändringarna. Försök igen senare.");
+            alert("Ett problem uppstod: " + result.message);
         }
     })
     .catch(error => {
@@ -225,6 +232,7 @@
         alert("Ett fel uppstod vid sparande. Kontrollera nätverksanslutningen.");
     });
 }
+
 
 
     function exportToCsv() {
