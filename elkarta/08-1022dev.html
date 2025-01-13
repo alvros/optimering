@@ -189,13 +189,80 @@
 </div>
 
 <script>
-    // Koppla knapparna till funktioner
-    document.getElementById("saveButtonUnderMap").addEventListener("click", saveData);
-    document.getElementById("saveButtonAboveTable").addEventListener("click", saveData);
-    document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
+    // ===============================
+    // 1) Ange dina JSONbin-konstanter
+    // ===============================
+    const BIN_URL = "https://api.jsonbin.io/v3/b/678572c6acd3cb34a8cb22d1";        // T.ex. "https://api.jsonbin.io/v3/b/63ac..."
+    const MASTER_KEY = "$2a$10$ahHCAAnv5EP.1LXdPppq2eT5i8gENPqDHlAhrPmqRd/j.V045XQYC";  // Hittar du i din JSONbin Dashboard
 
-    // saveData-funktion för att spara till Power Automate
-    function saveData() {
+    // ===============================
+    // 2) Koppla knappar till funktioner
+    // ===============================
+    document.getElementById("saveButtonUnderMap").addEventListener("click", saveDataToJSONbin);
+    document.getElementById("saveButtonAboveTable").addEventListener("click", saveDataToJSONbin);
+    document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
+    document.getElementById("loadDataButton").addEventListener("click", loadDataFromJSONbin);
+
+    // =================================================
+    // 3) Ladda data från JSONbin när sidan öppnas (valfritt)
+    // =================================================
+    window.addEventListener("DOMContentLoaded", () => {
+        loadDataFromJSONbin();
+    });
+
+    // ===============================
+    // Funktion: Ladda data (roads) från JSONbin
+    // ===============================
+    function loadDataFromJSONbin() {
+        fetch(BIN_URL + "/latest", {
+            method: "GET",
+            headers: {
+                "X-Master-Key": MASTER_KEY
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Nätverksfel: " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            // 'json.record' är själva JSON-innehållet
+            const savedData = json.record.roads || [];
+            console.log("Data från JSONbin:", savedData);
+
+            // Fyll tabellen med sparade värden
+            savedData.forEach(item => {
+                // item = { Gruvort, Status, Datum, Kommentar }
+                // Hitta motsvarande <tr> utifrån Gruvort
+                const row = document.querySelector(`tr[data-road-id="${item.Gruvort}"]`);
+                if (row) {
+                    // Sätt status
+                    row.querySelector(`#status-${item.Gruvort}`).value = item.Status || "";
+                    // Sätt datum
+                    if (item.Datum) {
+                        // Datum i format YYYY-MM-DD
+                        row.querySelector(`#date-${item.Gruvort}`).value = item.Datum;
+                    } else {
+                        row.querySelector(`#date-${item.Gruvort}`).value = "";
+                    }
+                    // Sätt kommentar
+                    row.querySelector(`#comment-${item.Gruvort}`).value = item.Kommentar || "";
+                }
+            });
+
+            // alert("Data laddad från JSONbin!");
+        })
+        .catch(error => {
+            console.error("Fel vid hämtning av data:", error);
+            alert("Kunde inte ladda data från JSONbin.");
+        });
+    }
+
+    // ===============================
+    // Funktion: Spara data till JSONbin
+    // ===============================
+    function saveDataToJSONbin() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let data = [];
 
@@ -205,28 +272,29 @@
             let date    = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
 
-            // Formatera datum till YYYY-MM-DD
+            // Formatera datum till YYYY-MM-DD (om angett)
             let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
 
             data.push({
-                Gruvort:    roadId,       // Mappa mot kolumn i SharePoint
-                Status:     status,
-                Datum:      formattedDate,
-                Kommentar:  comment
+                Gruvort: roadId,
+                Status: status,
+                Datum: formattedDate,
+                Kommentar: comment
             });
         });
 
-        // Anropa Power Automate-flöde
-        fetch("https://prod-146.westeurope.logic.azure.com:443/workflows/5f8165535ede49f184bd7fca4a89455f/triggers/manual/paths/invoke?api-version=2016-06-01", {
-            method: "POST",
+        // PUT: uppdatera existerande bin
+        fetch(BIN_URL, {
+            method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-Master-Key": MASTER_KEY
             },
             body: JSON.stringify({ roads: data })
         })
         .then(response => {
             if (response.ok) {
-                alert("Ändringarna har sparats!");
+                // alert("Ändringarna har sparats i JSONbin!");
             } else {
                 alert("Kunde inte spara ändringarna. Försök igen senare.");
             }
@@ -237,7 +305,9 @@
         });
     }
 
-    // Exportera data till CSV
+    // ===============================
+    // Funktion: Exportera data till CSV (oförändrad)
+    // ===============================
     function exportToCsv() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let csvContent = "Gruvort,Status,Datum,Kommentar\n";
@@ -259,7 +329,11 @@
         a.setAttribute("download", "gruvdata.csv");
         a.click();
     }
-</script>
 
+    // Exempel på hur du kan sätta status via contextmeny om du vill
+    function setRoadStatus(newStatus) {
+        // ...
+    }
+</script>
 </body>
 </html>
