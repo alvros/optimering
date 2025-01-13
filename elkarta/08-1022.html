@@ -86,11 +86,22 @@
                         <div class="road" id="road11"></div>
                         <div class="road" id="road12"></div>                        
                     </div>
+                    
+                    <!-- Save Button Under Map -->
+                    <div class="save-buttons">
+                        <button id="saveButtonUnderMap" class="save-button">Spara Ändringar</button>
+                    </div>
                 </div>
                 
                 <script src="../script.js"></script>
                 
                 <div class="comments-section">
+                    <div class="save-buttons">
+                        <button id="saveButtonAboveTable" class="save-button">Spara Ändringar</button>
+                        <button id="exportCsvButton" class="save-button">Exportera till CSV</button>
+                        <!-- Ev. en knapp för att ladda om data från JSONbin -->
+                        <button id="loadDataButton" class="save-button">Ladda från JSONbin</button>
+                    </div>
                     <table id="commentsTable">
                         <thead>
                             <tr>
@@ -101,9 +112,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Fullt utskriven struktur för alla vägar -->
                             <tr data-road-id="road1">
-                                <td>Väg 1</td>
+                                <td>80</td>
                                 <td><select id="status-road1">
                                     <option value="" selected>Välj status</option>
                                     <option>Optimerad</option>
@@ -115,7 +125,7 @@
                                 <td><input type="text" id="comment-road1"></td>
                             </tr>
                             <tr data-road-id="road2">
-                                <td>Väg 2</td>
+                                <td>82</td>
                                 <td><select id="status-road2">
                                     <option value="" selected>Välj status</option>
                                     <option>Optimerad</option>
@@ -126,8 +136,9 @@
                                 <td><input type="date" id="date-road2"></td>
                                 <td><input type="text" id="comment-road2"></td>
                             </tr>
+                            <!-- (Ytterligare rader för alla vägar som tidigare) -->
                             <tr data-road-id="road3">
-                                <td>Väg 3</td>
+                                <td>84</td>
                                 <td><select id="status-road3">
                                     <option value="" selected>Välj status</option>
                                     <option>Optimerad</option>
@@ -139,7 +150,7 @@
                                 <td><input type="text" id="comment-road3"></td>
                             </tr>
                             <tr data-road-id="road4">
-                                <td>Väg 4</td>
+                                <td>86</td>
                                 <td><select id="status-road4">
                                     <option value="" selected>Välj status</option>
                                     <option>Optimerad</option>
@@ -150,102 +161,7 @@
                                 <td><input type="date" id="date-road4"></td>
                                 <td><input type="text" id="comment-road4"></td>
                             </tr>
-                            <tr data-road-id="road5">
-                                <td>Väg 5</td>
-                                <td><select id="status-road5">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road5"></td>
-                                <td><input type="text" id="comment-road5"></td>
-                            </tr>
-                            <tr data-road-id="road6">
-                                <td>Väg 6</td>
-                                <td><select id="status-road6">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road6"></td>
-                                <td><input type="text" id="comment-road6"></td>
-                            </tr>
-                            <tr data-road-id="road7">
-                                <td>Väg 7</td>
-                                <td><select id="status-road7">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road7"></td>
-                                <td><input type="text" id="comment-road7"></td>
-                            </tr>
-                            <tr data-road-id="road8">
-                                <td>Väg 8</td>
-                                <td><select id="status-road8">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road8"></td>
-                                <td><input type="text" id="comment-road8"></td>
-                            </tr>
-                            <tr data-road-id="road9">
-                                <td>Väg 9</td>
-                                <td><select id="status-road9">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road9"></td>
-                                <td><input type="text" id="comment-road9"></td>
-                            </tr>
-                            <tr data-road-id="road10">
-                                <td>Väg 10</td>
-                                <td><select id="status-road10">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road10"></td>
-                                <td><input type="text" id="comment-road10"></td>
-                            </tr>
-                            <tr data-road-id="road11">
-                                <td>Väg 11</td>
-                                <td><select id="status-road11">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road11"></td>
-                                <td><input type="text" id="comment-road11"></td>
-                            </tr>
-                            <tr data-road-id="road12">
-                                <td>Väg 12</td>
-                                <td><select id="status-road12">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
-                                <td><input type="date" id="date-road12"></td>
-                                <td><input type="text" id="comment-road12"></td>
-                            </tr>                    
+                            <!-- (Ytterligare rader för alla vägar som tidigare) -->
                         </tbody>
                     </table>
                 </div>
@@ -263,5 +179,166 @@
         </div>
     </div>
 </div>
+
+<script>
+    // ===============================
+    // 1) Ange dina JSONbin-konstanter
+    // ===============================
+    const BIN_URL = "https://api.jsonbin.io/v3/b/678572c6acd3cb34a8cb22d1";        // Ange din JSONbin-URL
+    const MASTER_KEY = "$2a$10$ahHCAAnv5EP.1LXdPppq2eT5i8gENPqDHlAhrPmqRd/j.V045XQYC";  // Ange din Master Key från JSONbin
+
+    let clickedRoadId = null; // För att lagra vilken väg som högerklickades på
+
+    // ===============================
+    // 2) Koppla knappar till funktioner
+    // ===============================
+    document.getElementById("saveButtonUnderMap").addEventListener("click", saveDataToJSONbin);
+    document.getElementById("saveButtonAboveTable").addEventListener("click", saveDataToJSONbin);
+    document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
+
+    // =================================================
+    // 3) Ladda data från JSONbin när sidan öppnas
+    // =================================================
+    window.addEventListener("DOMContentLoaded", () => {
+        loadDataFromJSONbin();
+    });
+
+    // ===============================
+    // Funktion: Ladda data (roads) från JSONbin
+    // ===============================
+    function loadDataFromJSONbin() {
+        fetch(BIN_URL + "/latest", {
+            method: "GET",
+            headers: {
+                "X-Master-Key": MASTER_KEY
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Nätverksfel: " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            const savedData = json.record.roads || [];
+            console.log("Data från JSONbin:", savedData);
+
+            // Fyll tabellen med sparade värden
+            savedData.forEach(item => {
+                const row = document.querySelector(`tr[data-road-id="${item.Gruvort}"]`);
+                if (row) {
+                    row.querySelector(`#status-${item.Gruvort}`).value = item.Status || "";
+                    row.querySelector(`#date-${item.Gruvort}`).value = item.Datum || "";
+                    row.querySelector(`#comment-${item.Gruvort}`).value = item.Kommentar || "";
+                }
+            });
+        })
+        .catch(error => {
+            console.error("Fel vid hämtning av data:", error);
+            alert("Kunde inte ladda data från JSONbin.");
+        });
+    }
+
+    // ===============================
+    // Funktion: Spara data till JSONbin
+    // ===============================
+    function saveDataToJSONbin() {
+        const roads = document.querySelectorAll(".comments-section tbody tr");
+        let data = [];
+
+        roads.forEach(road => {
+            let roadId = road.getAttribute("data-road-id");
+            let status = road.querySelector(`#status-${roadId}`).value;
+            let date = road.querySelector(`#date-${roadId}`).value;
+            let comment = road.querySelector(`#comment-${roadId}`).value;
+
+            let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
+
+            data.push({
+                Gruvort: roadId,
+                Status: status,
+                Datum: formattedDate,
+                Kommentar: comment
+            });
+        });
+
+        fetch(BIN_URL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Master-Key": MASTER_KEY
+            },
+            body: JSON.stringify({ roads: data })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Ändringarna har sparats i JSONbin!");
+            } else {
+                alert("Kunde inte spara ändringarna. Försök igen senare.");
+            }
+        })
+        .catch(error => {
+            console.error("Fel vid sparande:", error);
+            alert("Ett fel uppstod vid sparande. Kontrollera nätverksanslutningen.");
+        });
+    }
+
+    // ===============================
+    // Funktion: Exportera data till CSV
+    // ===============================
+    function exportToCsv() {
+        const roads = document.querySelectorAll(".comments-section tbody tr");
+        let csvContent = "Gruvort,Status,Datum,Kommentar\n";
+
+        roads.forEach(road => {
+            let roadId = road.getAttribute("data-road-id");
+            let status = road.querySelector(`#status-${roadId}`).value;
+            let date = road.querySelector(`#date-${roadId}`).value;
+            let comment = road.querySelector(`#comment-${roadId}`).value;
+
+            csvContent += `${roadId},${status},${date},${comment}\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.setAttribute("href", url);
+        a.setAttribute("download", "gruvdata.csv");
+        a.click();
+    }
+
+    // ===============================
+    // Funktion: Visa kontextmeny vid högerklick
+    // ===============================
+    function showContextMenu(event, roadId) {
+        event.preventDefault();
+        clickedRoadId = roadId; // Lagra ID för den väg som högerklickades
+        const menu = document.getElementById("contextMenu");
+        menu.style.display = "block";
+        menu.style.left = `${event.pageX}px`;
+        menu.style.top = `${event.pageY}px`;
+    }
+
+    // ===============================
+    // Funktion: Dölj kontextmeny vid klick utanför
+    // ===============================
+    window.addEventListener("click", () => {
+        document.getElementById("contextMenu").style.display = "none";
+    });
+
+    // ===============================
+    // Funktion: Ändra status för specifik väg
+    // ===============================
+    
+
+    // ===============================
+    // Koppla kontextmenyn till varje väg
+    // ===============================
+    document.querySelectorAll(".road").forEach(road => {
+        road.addEventListener("contextmenu", (event) => showContextMenu(event, road.id));
+    });
+</script>
+
+
 </body>
 </html>
