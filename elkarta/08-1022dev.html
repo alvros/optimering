@@ -21,11 +21,11 @@
             <li class="sidebar-brand">
                 <a href="../index.html">
                     <img src="../lkab2.png" alt="LKAB Logo" class="sidebar-logo">
-                </a>                
+                </a>
             </li>
             <hr>
             <li class="dropdown">
-                <a href="#" data-target="#kartorSubmenu" class="submenu-toggle">Kartor</a>                
+                <a href="#" data-target="#kartorSubmenu" class="submenu-toggle">Kartor</a>
                 <ul class="submenu" id="kartorSubmenu">
                     <li class="dropdown">
                         <a href="#" data-target="#elSubmenu" class="submenu-toggle">EL</a>
@@ -39,9 +39,9 @@
                             <li><a href="34-1079.html">34/1079</a></li>
                             <li><a href="34-1108.html">34/1108</a></li>
                             <li><a href="38-1108.html">38/1108</a></li>
-                            <li><a href="41-1108soder.html">41/1108</a></li>                    
+                            <li><a href="41-1108soder.html">41/1108</a></li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="dropdown">
                         <a href="#" data-target="#dieselSubmenu" class="submenu-toggle">Diesel</a>
                         <ul class="submenu" id="dieselSubmenu">
@@ -54,14 +54,16 @@
                             <li><a href="../dikarta/34-1079d.html">34/1079</a></li>
                             <li><a href="../dikarta/34-1108d.html">34/1108</a></li>
                             <li><a href="../dikarta/38-1108d.html">38/1108</a></li>
-                            <li><a href="../dikarta/41-1108soderd.html">41/1108</a></li>                    
+                            <li><a href="../dikarta/41-1108soderd.html">41/1108</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
             <li class="signature">
-            <p>Fredrik Alvros<br><a href="mailto:fredrik.alvros@lkab.com">fredrik.alvros@lkab.com</a></p>
-            </li> 
+                <p>Fredrik Alvros<br>
+                   <a href="mailto:fredrik.alvros@lkab.com">fredrik.alvros@lkab.com</a>
+                </p>
+            </li>
         </ul>
     </div> 
 
@@ -84,7 +86,7 @@
                         <div class="road" id="road9"></div>
                         <div class="road" id="road10"></div>
                         <div class="road" id="road11"></div>
-                        <div class="road" id="road12"></div>                        
+                        <div class="road" id="road12"></div>
                     </div>
                     
                     <!-- Save Button Under Map -->
@@ -93,6 +95,7 @@
                     </div>
                 </div>
                 
+                <!-- Din script.js inkluderad här (för meny, toggling, etc.) -->
                 <script src="../script.js"></script>
                 
                 <div class="comments-section">
@@ -112,54 +115,62 @@
                         <tbody>
                             <tr data-road-id="road1">
                                 <td>80</td>
-                                <td><select id="status-road1">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
+                                <td>
+                                    <select id="status-road1">
+                                        <option value="" selected>Välj status</option>
+                                        <option>Optimerad</option>
+                                        <option>Planerad</option>
+                                        <option>Avställd</option>
+                                        <option>Ej Optimerad</option>
+                                    </select>
+                                </td>
                                 <td><input type="date" id="date-road1"></td>
                                 <td><input type="text" id="comment-road1"></td>
                             </tr>
                             <tr data-road-id="road2">
                                 <td>82</td>
-                                <td><select id="status-road2">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
+                                <td>
+                                    <select id="status-road2">
+                                        <option value="" selected>Välj status</option>
+                                        <option>Optimerad</option>
+                                        <option>Planerad</option>
+                                        <option>Avställd</option>
+                                        <option>Ej Optimerad</option>
+                                    </select>
+                                </td>
                                 <td><input type="date" id="date-road2"></td>
                                 <td><input type="text" id="comment-road2"></td>
                             </tr>
-                            <!-- (Ytterligare rader för alla vägar som tidigare) -->
+                            <!-- (Fortsätt med resterande rader som tidigare) -->
                             <tr data-road-id="road3">
                                 <td>84</td>
-                                <td><select id="status-road3">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
+                                <td>
+                                    <select id="status-road3">
+                                        <option value="" selected>Välj status</option>
+                                        <option>Optimerad</option>
+                                        <option>Planerad</option>
+                                        <option>Avställd</option>
+                                        <option>Ej Optimerad</option>
+                                    </select>
+                                </td>
                                 <td><input type="date" id="date-road3"></td>
                                 <td><input type="text" id="comment-road3"></td>
                             </tr>
                             <tr data-road-id="road4">
                                 <td>86</td>
-                                <td><select id="status-road4">
-                                    <option value="" selected>Välj status</option>
-                                    <option>Optimerad</option>
-                                    <option>Planerad</option>
-                                    <option>Avställd</option>
-                                    <option>Ej Optimerad</option>
-                                </select></td>
+                                <td>
+                                    <select id="status-road4">
+                                        <option value="" selected>Välj status</option>
+                                        <option>Optimerad</option>
+                                        <option>Planerad</option>
+                                        <option>Avställd</option>
+                                        <option>Ej Optimerad</option>
+                                    </select>
+                                </td>
                                 <td><input type="date" id="date-road4"></td>
                                 <td><input type="text" id="comment-road4"></td>
                             </tr>
-                            <!-- (Ytterligare rader för alla vägar som tidigare) -->
+                            <!-- (Fortsätt med resterande rader som tidigare) -->
                         </tbody>
                     </table>
                 </div>
@@ -172,39 +183,42 @@
                         <li onclick="setRoadStatus('Ej Optimerad')">Ej optimerad</li>
                     </ul>
                 </div>  
-                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Koppla knapparna till funktioner
     document.getElementById("saveButtonUnderMap").addEventListener("click", saveData);
     document.getElementById("saveButtonAboveTable").addEventListener("click", saveData);
     document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
 
+    // saveData-funktion för att spara till Power Automate
     function saveData() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let data = [];
-    
+
         roads.forEach(road => {
-            let roadId = road.getAttribute("data-road-id");
-            let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector(`#date-${roadId}`).value;
+            let roadId  = road.getAttribute("data-road-id");
+            let status  = road.querySelector(`#status-${roadId}`).value;
+            let date    = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
-    
+
+            // Formatera datum till YYYY-MM-DD
             let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
-    
+
             data.push({
-                Gruvort: roadId,
-                Status: status,
-                Datum: formattedDate,
-                Kommentar: comment
+                Gruvort:    roadId,       // Mappa mot kolumn i SharePoint
+                Status:     status,
+                Datum:      formattedDate,
+                Kommentar:  comment
             });
         });
-    
-        fetch("https://prod-146.westeurope.logic.azure.com:443/workflows/5f8165535ede49f184bd7fca4a89455f/triggers/manual/paths/invoke?api-version=2016-06-01", { // Byt ut med din Power Automate URL
-                method: "POST",
+
+        // Anropa Power Automate-flöde
+        fetch("https://prod-146.westeurope.logic.azure.com:443/workflows/5f8165535ede49f184bd7fca4a89455f/triggers/manual/paths/invoke?api-version=2016-06-01", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -223,20 +237,15 @@
         });
     }
 
-
-
-
-
-
+    // Exportera data till CSV
     function exportToCsv() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let csvContent = "Gruvort,Status,Datum,Kommentar\n";
 
         roads.forEach(road => {
-            let roadId = road.getAttribute("data-road-id");
-            let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector
-            (`#date-${roadId}`).value;
+            let roadId  = road.getAttribute("data-road-id");
+            let status  = road.querySelector(`#status-${roadId}`).value;
+            let date    = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
 
             csvContent += `${roadId},${status},${date},${comment}\n`;
@@ -244,14 +253,13 @@
 
         // Skapa en nedladdningslänk för CSV-filen
         const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        const url  = window.URL.createObjectURL(blob);
+        const a    = document.createElement("a");
         a.setAttribute("href", url);
         a.setAttribute("download", "gruvdata.csv");
         a.click();
     }
 </script>
-
 
 </body>
 </html>
