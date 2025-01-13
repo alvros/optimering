@@ -99,6 +99,8 @@
                     <div class="save-buttons">
                         <button id="saveButtonAboveTable" class="save-button">Spara Ändringar</button>
                         <button id="exportCsvButton" class="save-button">Exportera till CSV</button>
+                        <!-- Ev. en knapp för att ladda om data från JSONbin -->
+                        <button id="loadDataButton" class="save-button">Ladda från JSONbin</button>
                     </div>
                     <table id="commentsTable">
                         <thead>
@@ -179,22 +181,79 @@
 </div>
 
 <script>
-    document.getElementById("saveButtonUnderMap").addEventListener("click", saveData);
-    document.getElementById("saveButtonAboveTable").addEventListener("click", saveData);
+    // ===============================
+    // 1) Ange dina JSONbin-konstanter
+    // ===============================
+    const BIN_URL = "https://api.jsonbin.io/v3/b/678572c6acd3cb34a8cb22d1";        // Ange din JSONbin-URL
+    const MASTER_KEY = "$2a$10$ahHCAAnv5EP.1LXdPppq2eT5i8gENPqDHlAhrPmqRd/j.V045XQYC";  // Ange din Master Key från JSONbin
+
+    let clickedRoadId = null; // För att lagra vilken väg som högerklickades på
+
+    // ===============================
+    // 2) Koppla knappar till funktioner
+    // ===============================
+    document.getElementById("saveButtonUnderMap").addEventListener("click", saveDataToJSONbin);
+    document.getElementById("saveButtonAboveTable").addEventListener("click", saveDataToJSONbin);
     document.getElementById("exportCsvButton").addEventListener("click", exportToCsv);
 
-    function saveData() {
+    // =================================================
+    // 3) Ladda data från JSONbin när sidan öppnas
+    // =================================================
+    window.addEventListener("DOMContentLoaded", () => {
+        loadDataFromJSONbin();
+    });
+
+    // ===============================
+    // Funktion: Ladda data (roads) från JSONbin
+    // ===============================
+    function loadDataFromJSONbin() {
+        fetch(BIN_URL + "/latest", {
+            method: "GET",
+            headers: {
+                "X-Master-Key": MASTER_KEY
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Nätverksfel: " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            const savedData = json.record.roads || [];
+            console.log("Data från JSONbin:", savedData);
+
+            // Fyll tabellen med sparade värden
+            savedData.forEach(item => {
+                const row = document.querySelector(`tr[data-road-id="${item.Gruvort}"]`);
+                if (row) {
+                    row.querySelector(`#status-${item.Gruvort}`).value = item.Status || "";
+                    row.querySelector(`#date-${item.Gruvort}`).value = item.Datum || "";
+                    row.querySelector(`#comment-${item.Gruvort}`).value = item.Kommentar || "";
+                }
+            });
+        })
+        .catch(error => {
+            console.error("Fel vid hämtning av data:", error);
+            alert("Kunde inte ladda data från JSONbin.");
+        });
+    }
+
+    // ===============================
+    // Funktion: Spara data till JSONbin
+    // ===============================
+    function saveDataToJSONbin() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let data = [];
-    
+
         roads.forEach(road => {
             let roadId = road.getAttribute("data-road-id");
             let status = road.querySelector(`#status-${roadId}`).value;
             let date = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
-    
+
             let formattedDate = date ? new Date(date).toISOString().split("T")[0] : "";
-    
+
             data.push({
                 Gruvort: roadId,
                 Status: status,
@@ -202,17 +261,18 @@
                 Kommentar: comment
             });
         });
-    
-        fetch("https://prod-146.westeurope.logic.azure.com:443/workflows/5f8165535ede49f184bd7fca4a89455f/triggers/manual/paths/invoke?api-version=2016-06-01", { // Byt ut med din Power Automate URL
-                method: "POST",
+
+        fetch(BIN_URL, {
+            method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-Master-Key": MASTER_KEY
             },
             body: JSON.stringify({ roads: data })
         })
         .then(response => {
             if (response.ok) {
-                alert("Ändringarna har sparats!");
+                alert("Ändringarna har sparats i JSONbin!");
             } else {
                 alert("Kunde inte spara ändringarna. Försök igen senare.");
             }
@@ -223,11 +283,9 @@
         });
     }
 
-
-
-
-
-
+    // ===============================
+    // Funktion: Exportera data till CSV
+    // ===============================
     function exportToCsv() {
         const roads = document.querySelectorAll(".comments-section tbody tr");
         let csvContent = "Gruvort,Status,Datum,Kommentar\n";
@@ -235,14 +293,12 @@
         roads.forEach(road => {
             let roadId = road.getAttribute("data-road-id");
             let status = road.querySelector(`#status-${roadId}`).value;
-            let date = road.querySelector
-            (`#date-${roadId}`).value;
+            let date = road.querySelector(`#date-${roadId}`).value;
             let comment = road.querySelector(`#comment-${roadId}`).value;
 
             csvContent += `${roadId},${status},${date},${comment}\n`;
         });
 
-        // Skapa en nedladdningslänk för CSV-filen
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -250,6 +306,37 @@
         a.setAttribute("download", "gruvdata.csv");
         a.click();
     }
+
+    // ===============================
+    // Funktion: Visa kontextmeny vid högerklick
+    // ===============================
+    function showContextMenu(event, roadId) {
+        event.preventDefault();
+        clickedRoadId = roadId; // Lagra ID för den väg som högerklickades
+        const menu = document.getElementById("contextMenu");
+        menu.style.display = "block";
+        menu.style.left = `${event.pageX}px`;
+        menu.style.top = `${event.pageY}px`;
+    }
+
+    // ===============================
+    // Funktion: Dölj kontextmeny vid klick utanför
+    // ===============================
+    window.addEventListener("click", () => {
+        document.getElementById("contextMenu").style.display = "none";
+    });
+
+    // ===============================
+    // Funktion: Ändra status för specifik väg
+    // ===============================
+    
+
+    // ===============================
+    // Koppla kontextmenyn till varje väg
+    // ===============================
+    document.querySelectorAll(".road").forEach(road => {
+        road.addEventListener("contextmenu", (event) => showContextMenu(event, road.id));
+    });
 </script>
 
 
